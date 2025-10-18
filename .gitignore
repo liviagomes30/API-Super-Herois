@@ -1,0 +1,73 @@
+############################
+# Backend (.NET) - HeroesAPI
+############################
+HeroesAPI/bin/
+HeroesAPI/obj/
+HeroesAPI/*.user
+HeroesAPI/*.suo
+HeroesAPI/*.cache
+HeroesAPI/*.log
+HeroesAPI/*.pdb
+HeroesAPI/*.mdb
+HeroesAPI/*.db
+HeroesAPI/*.ldf
+HeroesAPI/*.mdf
+HeroesAPI/.vs/
+HeroesAPI/Properties/launchSettings.json
+
+# Build results
+HeroesAPI/[Bb]uild/
+HeroesAPI/[Ll]og/
+HeroesAPI/[Rr]elease*/
+HeroesAPI/[Dd]ebug*/
+
+# NuGet
+HeroesAPI/*.nupkg
+HeroesAPI/packages/
+HeroesAPI/*.snupkg
+
+############################
+# Frontend (Angular) - heroes-frontend
+############################
+heroes-frontend/node_modules/
+heroes-frontend/dist/
+heroes-frontend/.angular/
+heroes-frontend/.npm/
+heroes-frontend/npm-debug.log
+heroes-frontend/yarn.lock
+heroes-frontend/package-lock.json
+
+############################
+# IDE e Sistema
+############################
+.vscode/
+*.swp
+*.swo
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+*.orig
+
+############################
+# Logs
+############################
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+############################
+# Env Files
+############################
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+############################
+# Outros
+############################
+/publish/
+/out/
