@@ -1,1 +1,257 @@
-<p>hero-form works!</p>
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <button mat-icon-button (click)="voltar()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ isEditMode ? 'Editar Herói' : 'Cadastro de Herói' }}</h1>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p>Carregando dados do herói...</p>
+  </div>
+
+  <!-- ERROR STATE -->
+  <mat-card *ngIf="error" class="error-card error-danger">
+    <mat-card-content>
+      <mat-icon>error</mat-icon>
+      <span>{{ error }}</span>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- FORM CARD -->
+  <mat-card *ngIf="!loading" class="form-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>{{ isEditMode ? 'edit' : 'add_circle' }}</mat-icon>
+        {{ isEditMode ? 'Editar Herói' : 'Novo Herói' }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="heroForm" (ngSubmit)="onSubmit()" [class.loading]="submitting">
+        <!-- SEÇÃO: DADOS PESSOAIS -->
+        <div class="form-section">
+          <h2 class="form-section-title">
+            <mat-icon>person</mat-icon>
+            Dados Pessoais
+          </h2>
+
+          <div class="form-row">
+            <!-- Nome Real -->
+            <mat-form-field appearance="outline" class="required-field">
+              <mat-label>Nome Real</mat-label>
+              <input
+                matInput
+                formControlName="nome"
+                placeholder="Ex: Bruce Wayne"
+                maxlength="120"
+              />
+              <mat-icon matPrefix>badge</mat-icon>
+              <mat-hint>Nome civil do herói</mat-hint>
+              <mat-error *ngIf="heroForm.get('nome')?.hasError('required')">
+                <mat-icon>error</mat-icon>
+                Nome real é obrigatório
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('nome')?.hasError('maxlength')">
+                <mat-icon>error</mat-icon>
+                Máximo de 120 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Nome do Herói -->
+            <mat-form-field appearance="outline" class="required-field">
+              <mat-label>Nome do Herói</mat-label>
+              <input
+                matInput
+                formControlName="nomeHeroi"
+                placeholder="Ex: Batman"
+                maxlength="120"
+              />
+              <mat-icon matPrefix>shield</mat-icon>
+              <mat-hint>Nome de super-herói (único)</mat-hint>
+              <mat-error *ngIf="heroForm.get('nomeHeroi')?.hasError('required')">
+                <mat-icon>error</mat-icon>
+                Nome do herói é obrigatório
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('nomeHeroi')?.hasError('maxlength')">
+                <mat-icon>error</mat-icon>
+                Máximo de 120 caracteres
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('nomeHeroi')?.hasError('duplicate')">
+                <mat-icon>error</mat-icon>
+                Este nome de herói já está em uso
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row single">
+            <!-- Data de Nascimento -->
+            <mat-form-field appearance="outline" class="required-field">
+              <mat-label>Data de Nascimento</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="dataNascimento"
+                placeholder="DD/MM/AAAA"
+                [max]="maxDate"
+              />
+              <mat-icon matPrefix>cake</mat-icon>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-hint>Selecione a data de nascimento</mat-hint>
+              <mat-error *ngIf="heroForm.get('dataNascimento')?.hasError('required')">
+                <mat-icon>error</mat-icon>
+                Data de nascimento é obrigatória
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('dataNascimento')?.hasError('matDatepickerMax')">
+                <mat-icon>error</mat-icon>
+                Data não pode ser no futuro
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- SEÇÃO: DADOS FÍSICOS -->
+        <div class="form-section">
+          <h2 class="form-section-title">
+            <mat-icon>straighten</mat-icon>
+            Dados Físicos
+          </h2>
+
+          <div class="form-row">
+            <!-- Altura -->
+            <mat-form-field appearance="outline" class="required-field">
+              <mat-label>Altura</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="altura"
+                placeholder="Ex: 1.88"
+                step="0.01"
+                min="0"
+                max="3"
+              />
+              <mat-icon matPrefix>height</mat-icon>
+              <span matSuffix>metros</span>
+              <mat-hint>Altura em metros (Ex: 1.88)</mat-hint>
+              <mat-error *ngIf="heroForm.get('altura')?.hasError('required')">
+                <mat-icon>error</mat-icon>
+                Altura é obrigatória
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('altura')?.hasError('min')">
+                <mat-icon>error</mat-icon>
+                Altura deve ser maior que 0
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('altura')?.hasError('max')">
+                <mat-icon>error</mat-icon>
+                Altura máxima: 3 metros
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Peso -->
+            <mat-form-field appearance="outline" class="required-field">
+              <mat-label>Peso</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="peso"
+                placeholder="Ex: 95"
+                step="0.1"
+                min="0"
+                max="500"
+              />
+              <mat-icon matPrefix>monitor_weight</mat-icon>
+              <span matSuffix>kg</span>
+              <mat-hint>Peso em quilogramas</mat-hint>
+              <mat-error *ngIf="heroForm.get('peso')?.hasError('required')">
+                <mat-icon>error</mat-icon>
+                Peso é obrigatório
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('peso')?.hasError('min')">
+                <mat-icon>error</mat-icon>
+                Peso deve ser maior que 0
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('peso')?.hasError('max')">
+                <mat-icon>error</mat-icon>
+                Peso máximo: 500 kg
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- SEÇÃO: SUPERPODERES -->
+        <div class="superpowers-section">
+          <h2 class="form-section-title">
+            <mat-icon>bolt</mat-icon>
+            Superpoderes
+          </h2>
+
+          <!-- Loading Superpoderes -->
+          <div *ngIf="loadingPowers" class="loading-container">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Carregando superpoderes...</p>
+          </div>
+
+          <!-- Grid de Checkboxes -->
+          <div *ngIf="!loadingPowers && superpoderes.length > 0" class="powers-grid">
+            <div *ngFor="let power of superpoderes" class="power-checkbox">
+              <mat-checkbox
+                [checked]="isPowerSelected(power.id)"
+                (change)="onPowerChange($event, power.id)"
+              >
+                {{ power.superpoder }}
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <!-- Nenhum superpoder disponível -->
+          <div *ngIf="!loadingPowers && superpoderes.length === 0">
+            <mat-card class="error-card error-warning">
+              <mat-card-content>
+                <mat-icon>warning</mat-icon>
+                <span>Nenhum superpoder disponível no momento.</span>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <!-- Erro de Validação -->
+          <div *ngIf="showPowersError" class="powers-error">
+            <mat-icon>error</mat-icon>
+            Selecione pelo menos um superpoder
+          </div>
+        </div>
+
+        <!-- AÇÕES DO FORMULÁRIO -->
+        <div class="form-actions">
+          <button
+            mat-stroked-button
+            type="button"
+            class="btn-cancel"
+            (click)="onCancel()"
+            [disabled]="submitting"
+          >
+            <mat-icon>close</mat-icon>
+            Cancelar
+          </button>
+
+          <button
+            mat-raised-button
+            type="submit"
+            class="btn-save"
+            [disabled]="heroForm.invalid || selectedPowers.length === 0 || submitting"
+          >
+            <mat-icon>{{ submitting ? 'hourglass_empty' : 'save' }}</mat-icon>
+            {{ submitting ? 'Salvando...' : isEditMode ? 'Atualizar' : 'Salvar' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
