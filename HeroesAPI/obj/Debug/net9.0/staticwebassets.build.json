@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "uyUJxyTlZOCZQEo8RnUz2kslZuWu3ybWFi+h4kq4NZM=",
+  "Source": "HeroesAPI",
+  "BasePath": "_content/HeroesAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
