@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 
+import { NotificationService } from '../../services/notification.service';
 import { HeroService } from '../../services/hero.service';
 import { Heroi } from '../../models/heroi.model';
 
@@ -32,7 +33,11 @@ export class HeroList implements OnInit {
   errorMessage = '';
 
   // recebe instâncias injetadas do HeroService e do Router
-  constructor(private heroService: HeroService, private router: Router) {}
+  constructor(
+    private heroService: HeroService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   // chamado 1 vez quando o componente é inicializado
   ngOnInit(): void {
@@ -53,8 +58,12 @@ export class HeroList implements OnInit {
         console.error('Erro ao carregar heróis:', error);
         if (error.status === 204) {
           this.errorMessage = 'Nenhum super-herói cadastrado ainda.';
+          this.notificationService.showInfo('Nenhum super-herói cadastrado ainda.');
         } else {
           this.errorMessage = 'Erro ao carregar heróis. Tente novamente.';
+          this.notificationService.showError(
+            'Erro ao carregar a lista de heróis. Tente novamente.'
+          );
         }
         this.herois = [];
         this.loading = false;
@@ -72,18 +81,30 @@ export class HeroList implements OnInit {
   }
 
   deleteHero(id: number, nomeHeroi: string): void {
-    if (confirm(`Tem certeza que deseja excluir ${nomeHeroi}?`)) {
-      this.heroService.deleteHeroi(id).subscribe({
-        next: (response) => {
-          alert(response.message || 'Herói excluído com sucesso!');
-          this.loadHerois();
-        },
-        error: (error) => {
-          console.error('Erro ao excluir herói:', error);
-          alert('Erro ao excluir herói. Tente novamente.');
-        },
-      });
-    }
+    this.notificationService.confirmDelete(nomeHeroi).subscribe((confirmed) => {
+      if (confirmed) {
+        this.heroService.deleteHeroi(id).subscribe({
+          next: (response) => {
+            this.notificationService.showSuccess(
+              response.message || `${nomeHeroi} foi excluído com sucesso!`
+            );
+
+            this.loadHerois();
+          },
+          error: (error) => {
+            console.error('Erro ao excluir herói:', error);
+
+            if (error.status === 404) {
+              this.notificationService.showError('Herói não encontrado.');
+            } else if (error.error?.message) {
+              this.notificationService.showError(error.error.message);
+            } else {
+              this.notificationService.showError('Erro ao excluir o herói. Tente novamente.');
+            }
+          },
+        });
+      }
+    });
   }
 
   createNew(): void {

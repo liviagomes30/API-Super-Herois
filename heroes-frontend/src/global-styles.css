@@ -346,3 +346,44 @@ mat-divider {
 .p-4 {
   padding: var(--spacing-lg);
 }
+
+.snackbar-success {
+  background: #4caf50 !important;
+  color: white !important;
+}
+
+.snackbar-success .mat-simple-snack-bar-content {
+  font-weight: 500;
+}
+
+.snackbar-error {
+  background: #f44336 !important;
+  color: white !important;
+}
+
+.snackbar-error .mat-simple-snack-bar-content {
+  font-weight: 500;
+}
+
+.snackbar-warning {
+  background: #ff9800 !important;
+  color: white !important;
+}
+
+.snackbar-warning .mat-simple-snack-bar-content {
+  font-weight: 500;
+}
+
+.snackbar-info {
+  background: #2196f3 !important;
+  color: white !important;
+}
+
+.snackbar-info .mat-simple-snack-bar-content {
+  font-weight: 500;
+}
+
+/* Botão de fechar do snackbar */
+.mat-mdc-snack-bar-action {
+  color: white !important;
+}

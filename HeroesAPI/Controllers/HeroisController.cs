@@ -85,7 +85,7 @@ namespace HeroesAPI.Controllers
                 return BadRequest(ModelState);
 
             var heroiExiste = await _context.Herois
-                .AnyAsync(h => h.NomeHeroi == dto.NomeHeroi);
+                .AnyAsync(h => h.NomeHeroi.ToLower() == dto.NomeHeroi.ToLower());
             
             if (heroiExiste)
                 return BadRequest(new { message = $"Já existe um herói chamado '{dto.NomeHeroi}'" });
@@ -158,7 +158,7 @@ namespace HeroesAPI.Controllers
                 return NotFound(new { message = $"Herói com ID {id} não encontrado" }); // 404
 
             var nomeEmUso = await _context.Herois
-                .AnyAsync(h => h.NomeHeroi == dto.NomeHeroi && h.Id != id);
+                .AnyAsync(h => h.NomeHeroi.ToLower() == dto.NomeHeroi.ToLower() && h.Id != id);
             
             if (nomeEmUso)
                 return BadRequest(new { message = $"O nome '{dto.NomeHeroi}' já está em uso" });

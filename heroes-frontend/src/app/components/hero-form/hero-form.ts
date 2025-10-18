@@ -29,7 +29,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
     MatButtonModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatDividerModule,
@@ -53,6 +52,7 @@ export class HeroForm implements OnInit {
   showPowersError = false;
 
   maxDate = new Date();
+  minDate = new Date(1900, 0, 1);
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +60,7 @@ export class HeroForm implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // inicia com validações
+   
     this.heroForm = this.fb.group({
       nome: ['', [Validators.required, Validators.maxLength(120)]],
       nomeHeroi: ['', [Validators.required, Validators.maxLength(120)]],
@@ -73,7 +73,6 @@ export class HeroForm implements OnInit {
   ngOnInit(): void {
     this.loadSuperpoderes();
 
-    // se está em modo de edição
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.isEditMode = true;
@@ -98,9 +97,6 @@ export class HeroForm implements OnInit {
     });
   }
 
-  /**
-   * Carrega os dados de um herói para edição
-   */
   loadHero(id: number): void {
     this.loading = true;
     this.error = null;
@@ -115,9 +111,7 @@ export class HeroForm implements OnInit {
           peso: hero.peso,
         });
 
-        // Seleciona os superpoderes do herói
         this.selectedPowers = hero.superpoderes.map((s) => s.id);
-
         this.loading = false;
       },
       error: (err) => {
@@ -152,6 +146,14 @@ export class HeroForm implements OnInit {
       return;
     }
 
+    // Valida a data manualmente antes de submeter
+    const dateControl = this.heroForm.get('dataNascimento');
+    if (dateControl?.value && !this.isValidDate(dateControl.value)) {
+      dateControl.setErrors({ invalidDate: true });
+      this.heroForm.markAllAsTouched();
+      return;
+    }
+
     if (this.heroForm.invalid) {
       this.heroForm.markAllAsTouched();
       return;
@@ -169,7 +171,6 @@ export class HeroForm implements OnInit {
       peso: parseFloat(this.heroForm.value.peso),
     };
 
-    //  cria ou atualiza
     const operation = this.isEditMode
       ? this.heroService.updateHeroi(this.heroId!, heroDto)
       : this.heroService.createHeroi(heroDto);
@@ -196,8 +197,33 @@ export class HeroForm implements OnInit {
     });
   }
 
+  private isValidDate(value: any): boolean {
+    if (!value) return false;
+
+    const date = value instanceof Date ? value : new Date(value);
+
+    // Data inválida
+    if (isNaN(date.getTime())) {
+      return false;
+    }
+
+    // Data no futuro
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+    if (date > today) {
+      return false;
+    }
+
+    // Data muito antiga
+    const minDate = new Date(1900, 0, 1);
+    if (date < minDate) {
+      return false;
+    }
+
+    return true;
+  }
+
   private formatDate(date: Date): string {
-    // Formato: "2001-08-10T00:00:00"
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');

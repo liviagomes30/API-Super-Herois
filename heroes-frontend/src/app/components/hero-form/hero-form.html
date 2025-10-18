@@ -97,18 +97,28 @@
                 formControlName="dataNascimento"
                 placeholder="DD/MM/AAAA"
                 [max]="maxDate"
+                [min]="minDate"
               />
               <mat-icon matPrefix>cake</mat-icon>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-              <mat-hint>Selecione a data de nascimento</mat-hint>
+              <mat-hint>Digite no formato DD/MM/AAAA ou use o calendário</mat-hint>
+
               <mat-error *ngIf="heroForm.get('dataNascimento')?.hasError('required')">
                 <mat-icon>error</mat-icon>
                 Data de nascimento é obrigatória
               </mat-error>
+              <mat-error *ngIf="heroForm.get('dataNascimento')?.hasError('matDatepickerParse')">
+                <mat-icon>error</mat-icon>
+                Data inválida. Use o formato DD/MM/AAAA
+              </mat-error>
               <mat-error *ngIf="heroForm.get('dataNascimento')?.hasError('matDatepickerMax')">
                 <mat-icon>error</mat-icon>
-                Data não pode ser no futuro
+                A data não pode ser no futuro
+              </mat-error>
+              <mat-error *ngIf="heroForm.get('dataNascimento')?.hasError('matDatepickerMin')">
+                <mat-icon>error</mat-icon>
+                Data deve ser posterior a 01/01/1900
               </mat-error>
             </mat-form-field>
           </div>
