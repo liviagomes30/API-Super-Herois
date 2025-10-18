@@ -141,7 +141,6 @@ export class HeroForm implements OnInit {
       this.selectedPowers = this.selectedPowers.filter((id) => id !== powerId);
     }
 
-    // Remove o erro se pelo menos um superpoder foi selecionado
     if (this.selectedPowers.length > 0) {
       this.showPowersError = false;
     }
