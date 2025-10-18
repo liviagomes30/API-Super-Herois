@@ -1,83 +1,249 @@
 .container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
+/* ===== HEADER COM GRADIENTE ===== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #e0e0e0;
+  padding: 20px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  color: var(--text-white);
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
 }
 
 .header h1 {
   margin: 0;
-  color: #333;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  gap: 20px;
+/* Botão Novo Herói */
+.btn-new-hero {
+  background: var(--bg-white) !important;
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+  padding: 0 var(--spacing-lg) !important;
+  height: 48px !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
 }
 
-.loading-container p {
-  font-size: 18px;
-  color: #666;
+.btn-new-hero:hover {
+  background: #f5f5f5 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
-.error-card {
-  margin-bottom: 20px;
-  background-color: #fff3e0;
+.btn-new-hero mat-icon {
+  color: var(--primary-color) !important;
+  margin-right: var(--spacing-sm);
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
 }
 
-.error-card mat-card-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
+/* ===== GRID DE HERÓIS ===== */
 .heroes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--spacing-lg);
 }
 
+/* ===== CARDS DE HERÓIS ===== */
 .hero-card {
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border-radius: var(--radius-lg) !important;
 }
 
 .hero-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
 }
 
-.hero-card mat-card-content p {
-  margin: 8px 0;
-  color: #555;
-}
-
-.superpowers {
-  margin-top: 15px;
-}
-
-.superpowers mat-chip-listbox {
-  margin-top: 8px;
-}
-
-mat-card-actions {
+/* Header do Card com Gradiente */
+.card-header-gradient {
+  background: var(--gradient-accent);
+  color: var(--text-white);
+  padding: 20px;
   display: flex;
-  justify-content: space-around;
-  padding: 8px 16px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-mat-card-actions button {
-  flex: 1;
+.card-header-gradient mat-card-header {
+  padding: 0;
+}
+
+.card-header-gradient mat-card-title {
+  color: var(--text-white);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card-header-gradient mat-card-subtitle {
+  color: var(--text-white-secondary);
+  font-size: 0.95rem;
+}
+
+/* Badge de ID */
+.hero-id-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.hero-id-badge mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ===== GRID DE INFORMAÇÕES ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: var(--spacing-md) 0;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 12px;
+  background: var(--bg-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.info-item mat-icon {
+  color: var(--primary-color);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ===== SUPERPODERES ===== */
+.superpowers {
+  margin-top: var(--spacing-md);
+}
+
+.superpowers-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.superpowers-header mat-icon {
+  color: #ff9800;
+}
+
+.superpowers-header strong {
+  font-size: 1rem;
+}
+
+/* Chips de Superpoderes */
+.powers-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.power-chip-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gradient-accent);
+  color: var(--text-white);
+  font-weight: 500;
+  padding: 10px var(--spacing-md);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+  cursor: default;
+}
+
+.power-chip-custom:hover {
+  transform: scale(1.05);
+}
+
+.power-chip-custom mat-icon {
+  color: var(--text-white);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.power-chip-custom span {
+  color: var(--text-white);
+}
+
+/* ===== RESPONSIVE - TABLET ===== */
+@media (max-width: 768px) {
+  .heroes-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    padding: var(--spacing-md);
+  }
+
+  .header h1 {
+    font-size: 1.4rem;
+  }
+}
+
+/* ===== RESPONSIVE - MOBILE ===== */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .header-content {
+    justify-content: center;
+  }
+
+  .card-header-gradient {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-id-badge {
+    align-self: flex-start;
+  }
 }

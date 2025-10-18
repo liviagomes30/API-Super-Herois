@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
+
 import { HeroService } from '../../services/hero.service';
 import { Heroi } from '../../models/heroi.model';
 
@@ -17,8 +18,8 @@ import { Heroi } from '../../models/heroi.model';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
   ],
   templateUrl: './hero-list.html',
   styleUrl: './hero-list.css',

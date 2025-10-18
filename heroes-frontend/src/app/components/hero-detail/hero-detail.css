@@ -1,0 +1,180 @@
+.container {
+  max-width: 900px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ===== HERO DETAIL CARD ===== */
+.hero-detail-card {
+  overflow: hidden;
+}
+
+/* Header do Card com Gradiente */
+.hero-header {
+  background: var(--gradient-primary);
+  color: var(--text-white);
+  padding: var(--spacing-lg);
+}
+
+.hero-header mat-card-title {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.hero-header mat-card-subtitle {
+  color: var(--text-white-secondary);
+  font-size: 1rem;
+}
+
+/* Content */
+mat-card-content {
+  padding: var(--spacing-lg);
+}
+
+/* ===== SEÇÕES DE INFORMAÇÃO ===== */
+.info-section h2,
+.powers-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+}
+
+.powers-section {
+  margin-top: 32px;
+}
+
+/* Grid de Informações */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.info-item {
+  padding: 12px;
+  background-color: var(--bg-light);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary-dark);
+}
+
+/* ===== SUPERPODERES ===== */
+.powers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.power-card {
+  background: var(--gradient-accent);
+  color: var(--text-white);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+.power-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.power-card mat-card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: 20px !important;
+}
+
+/* Ícone do Superpoder */
+.power-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.power-icon mat-icon {
+  color: var(--text-white);
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+/* Informações do Superpoder */
+.power-info {
+  flex: 1;
+}
+
+.power-info h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.power-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===== RESPONSIVE - TABLET ===== */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero-header mat-card-title {
+    font-size: 1.6rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .powers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-section h2,
+  .powers-section h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== RESPONSIVE - MOBILE ===== */
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+
+  .power-card mat-card-content {
+    padding: var(--spacing-md) !important;
+  }
+}

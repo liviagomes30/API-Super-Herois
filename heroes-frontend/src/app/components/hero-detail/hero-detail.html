@@ -1,1 +1,115 @@
-<p>hero-detail works!</p>
+<div class="container">
+  <!-- Botão voltar -->
+  <div class="header">
+    <button mat-icon-button (click)="goBack()" aria-label="Voltar">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Detalhes do Herói</h1>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Carregando informações do herói...</p>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <mat-card *ngIf="errorMessage && !loading" class="error-card">
+    <mat-card-content>
+      <mat-icon color="warn">error</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Detalhes do Herói -->
+  <mat-card *ngIf="heroi && !loading" class="hero-detail-card">
+    <!-- Header do Card -->
+    <mat-card-header class="hero-header">
+      <mat-card-title>{{ heroi.nomeHeroi }}</mat-card-title>
+      <mat-card-subtitle>ID: {{ heroi.id }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <!-- Informações Pessoais -->
+      <div class="info-section">
+        <h2>
+          <mat-icon>person</mat-icon>
+          Informações Pessoais
+        </h2>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Nome Real:</span>
+            <span class="value">{{ heroi.nome }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Nome Herói:</span>
+            <span class="value">{{ heroi.nomeHeroi }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Data de Nascimento:</span>
+            <span class="value">{{ formatarData(heroi.dataNascimento) }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Idade:</span>
+            <span class="value">{{ calcularIdade(heroi.dataNascimento) }} anos</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Altura:</span>
+            <span class="value">{{ heroi.altura }} metros</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Peso:</span>
+            <span class="value">{{ heroi.peso }} kg</span>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Superpoderes -->
+      <!-- Superpoderes -->
+      <div class="powers-section">
+        <h2>
+          <mat-icon>flash_on</mat-icon>
+          Superpoderes
+        </h2>
+
+        <div class="powers-grid">
+          <mat-card *ngFor="let poder of heroi.superpoderes" class="power-card">
+            <mat-card-content>
+              <div class="power-icon">
+                <mat-icon>bolt</mat-icon>
+              </div>
+              <div class="power-info">
+                <h3>{{ poder.superpoder }}</h3>
+                <p>{{ poder.descricao }}</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <!-- Ações -->
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="editHero()">
+        <mat-icon>edit</mat-icon>
+        Editar Herói
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteHero()">
+        <mat-icon>delete</mat-icon>
+        Excluir Herói
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

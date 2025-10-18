@@ -1,8 +1,11 @@
 <div class="container">
   <div class="header">
-    <h1>Gerenciamento de Super-Heróis</h1>
-    <button mat-raised-button color="primary" (click)="createNew()">
-      <mat-icon>add</mat-icon>
+    <div class="header-content">
+      <mat-icon class="header-icon">superhero</mat-icon>
+      <h1>Gerenciamento de Super-Heróis</h1>
+    </div>
+    <button mat-raised-button class="btn-new-hero" (click)="createNew()">
+      <mat-icon>add_circle</mat-icon>
       Novo Herói
     </button>
   </div>
@@ -24,26 +27,53 @@
   <!-- Lista de heróis -->
   <div *ngIf="!loading && !errorMessage && herois.length > 0" class="heroes-grid">
     <mat-card *ngFor="let heroi of herois" class="hero-card">
-      <mat-card-header>
-        <mat-card-title>{{ heroi.nomeHeroi }}</mat-card-title>
-        <mat-card-subtitle>ID: {{ heroi.id }}</mat-card-subtitle>
-      </mat-card-header>
+      <!-- Header com gradiente -->
+      <div class="card-header-gradient">
+        <mat-card-header>
+          <mat-card-title>{{ heroi.nomeHeroi }}</mat-card-title>
+          <mat-card-subtitle>{{ heroi.nome }}</mat-card-subtitle>
+        </mat-card-header>
+        <div class="hero-id-badge">
+          <mat-icon>tag</mat-icon>
+          {{ heroi.id }}
+        </div>
+      </div>
 
       <mat-card-content>
-        <p><strong>Nome Real:</strong> {{ heroi.nome }}</p>
-        <p><strong>Idade:</strong> {{ calcularIdade(heroi.dataNascimento) }} anos</p>
-        <p><strong>Altura:</strong> {{ heroi.altura }}m</p>
-        <p><strong>Peso:</strong> {{ heroi.peso }}kg</p>
+        <!-- Informações em grid -->
+        <div class="info-grid">
+          <div class="info-item">
+            <mat-icon>cake</mat-icon>
+            <span>{{ calcularIdade(heroi.dataNascimento) }} anos</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>height</mat-icon>
+            <span>{{ heroi.altura }}m</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>monitor_weight</mat-icon>
+            <span>{{ heroi.peso }}kg</span>
+          </div>
+        </div>
 
+        <mat-divider></mat-divider>
+
+        <!-- Superpoderes -->
         <div class="superpowers">
-          <strong>Superpoderes:</strong>
-          <mat-chip-listbox>
-            <mat-chip-option *ngFor="let poder of heroi.superpoderes" disabled>
-              {{ poder.superpoder }}
-            </mat-chip-option>
-          </mat-chip-listbox>
+          <div class="superpowers-header">
+            <mat-icon>flash_on</mat-icon>
+            <strong>Superpoderes</strong>
+          </div>
+          <div class="powers-chips">
+            <div *ngFor="let poder of heroi.superpoderes" class="power-chip-custom">
+              <mat-icon>bolt</mat-icon>
+              <span>{{ poder.superpoder }}</span>
+            </div>
+          </div>
         </div>
       </mat-card-content>
+
+      <mat-divider></mat-divider>
 
       <mat-card-actions>
         <button mat-button color="primary" (click)="viewHero(heroi.id)">
