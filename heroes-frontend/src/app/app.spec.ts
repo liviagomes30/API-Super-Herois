@@ -1,3 +1,4 @@
+// arquivo de teste unitário para o componente App
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 

@@ -1,0 +1,83 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.loading-container p {
+  font-size: 18px;
+  color: #666;
+}
+
+.error-card {
+  margin-bottom: 20px;
+  background-color: #fff3e0;
+}
+
+.error-card mat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.heroes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.hero-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hero-card mat-card-content p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.superpowers {
+  margin-top: 15px;
+}
+
+.superpowers mat-chip-listbox {
+  margin-top: 8px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 16px;
+}
+
+mat-card-actions button {
+  flex: 1;
+}

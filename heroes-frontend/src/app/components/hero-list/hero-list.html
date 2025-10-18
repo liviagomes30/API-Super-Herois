@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="header">
+    <h1>Gerenciamento de Super-Heróis</h1>
+    <button mat-raised-button color="primary" (click)="createNew()">
+      <mat-icon>add</mat-icon>
+      Novo Herói
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Carregando heróis...</p>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <mat-card *ngIf="errorMessage && !loading" class="error-card">
+    <mat-card-content>
+      <mat-icon color="warn">warning</mat-icon>
+      {{ errorMessage }}
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Lista de heróis -->
+  <div *ngIf="!loading && !errorMessage && herois.length > 0" class="heroes-grid">
+    <mat-card *ngFor="let heroi of herois" class="hero-card">
+      <mat-card-header>
+        <mat-card-title>{{ heroi.nomeHeroi }}</mat-card-title>
+        <mat-card-subtitle>ID: {{ heroi.id }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p><strong>Nome Real:</strong> {{ heroi.nome }}</p>
+        <p><strong>Idade:</strong> {{ calcularIdade(heroi.dataNascimento) }} anos</p>
+        <p><strong>Altura:</strong> {{ heroi.altura }}m</p>
+        <p><strong>Peso:</strong> {{ heroi.peso }}kg</p>
+
+        <div class="superpowers">
+          <strong>Superpoderes:</strong>
+          <mat-chip-listbox>
+            <mat-chip-option *ngFor="let poder of heroi.superpoderes" disabled>
+              {{ poder.superpoder }}
+            </mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="viewHero(heroi.id)">
+          <mat-icon>visibility</mat-icon>
+          Ver
+        </button>
+        <button mat-button color="accent" (click)="editHero(heroi.id)">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-button color="warn" (click)="deleteHero(heroi.id, heroi.nomeHeroi)">
+          <mat-icon>delete</mat-icon>
+          Excluir
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
