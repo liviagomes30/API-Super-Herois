@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using HeroesAPI.Data;
 using System.Text.Json.Serialization;
+using HeroesAPI.Services.Interfaces;
+using HeroesAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ builder.Services.AddControllers()
 // configura o banco de dados em memória
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("HeroesDb"));
+
+builder.Services.AddScoped<IHeroiService, HeroiService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

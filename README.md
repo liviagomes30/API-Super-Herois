@@ -1,10 +1,10 @@
 # 🦸 Hero Management System
 
-Sistema completo de gerenciamento de super-heróis desenvolvido com Angular e .NET Core, implementando operações CRUD completas com interface moderna e responsiva.
+Sistema completo de gerenciamento de super-heróis desenvolvido com Angular e .NET Core, implementando operações CRUD completas com interface moderna e responsiva, seguindo arquitetura em camadas com separação de responsabilidades.
 
 ## 📋 Sobre o Projeto
 
-Este projeto foi desenvolvido como parte de um desafio técnico para vaga de Desenvolvedor Full Stack. O sistema permite cadastrar, visualizar, editar e excluir super-heróis, associando-os a múltiplos superpoderes através de uma interface intuitiva e elegante.
+O sistema permite cadastrar, visualizar, editar e excluir super-heróis, associando-os a múltiplos superpoderes através de uma interface intuitiva e elegante.
 
 ### ✨ Principais Funcionalidades
 
@@ -17,33 +17,93 @@ Este projeto foi desenvolvido como parte de um desafio técnico para vaga de Des
 - ✅ **Validação de unicidade** do nome de herói (não permite duplicatas)
 - ✅ **Interface responsiva** que funciona em desktop, tablet e mobile
 - ✅ **Documentação Swagger** completa da API
+- ✅ **Arquitetura em camadas** com Service Layer para regras de negócio
 
 ## 🏗️ Arquitetura e Decisões Técnicas
 
 ### Backend (.NET Core)
 
+**Arquitetura em Camadas:**
+
+O projeto foi desenvolvido seguindo o padrão de **arquitetura em camadas**, promovendo separação de responsabilidades e facilitando manutenção e testes:
+
+```
+┌─────────────────────────────────────────┐
+│  Controllers (Presentation Layer)      │
+│  - Recebe requisições HTTP              │
+│  - Valida ModelState                    │
+│  - Retorna IActionResult                │
+└─────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────┐
+│  Services (Business Logic Layer)       │
+│  - Regras de negócio                    │
+│  - Validações complexas                 │
+│  - Orquestração de operações            │
+└─────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────┐
+│  Data Access Layer                      │
+│  - Entity Framework (DbContext)         │
+│  - Acesso ao banco de dados             │
+└─────────────────────────────────────────┘
+```
+
 **Estrutura do Projeto:**
 
-- **Controllers**: Endpoints REST seguindo boas práticas RESTful
+- **Controllers**: Endpoints REST que orquestram as requisições HTTP
+- **Services**: Camada de lógica de negócio com validações e regras
+  - `IHeroiService`: Interface do serviço (contrato)
+  - `HeroiService`: Implementação com toda a lógica de negócio
+  - `ServiceResult`: Objeto de retorno padronizado
 - **Models**: Entidades do banco de dados com Data Annotations
 - **DTOs**: Separação entre modelos de domínio e contratos da API
 - **Data**: Contexto do Entity Framework e configuração do banco
 
 **Decisões Importantes:**
 
-1. **Entity Framework InMemory Database**: Optei por usar banco em memória para facilitar a execução e testes do projeto. Em produção, seria facilmente substituído por SQL Server, MySQL ou PostgreSQL.
+1. **Service Layer Pattern**: Implementei uma camada de serviço dedicada para:
 
-2. **Relacionamento Many-to-Many**: Implementei explicitamente a tabela intermediária `HeroisSuperpoderes` para ter controle total sobre o relacionamento entre heróis e superpoderes.
+   - Centralizar regras de negócio
+   - Facilitar testes unitários
+   - Promover reuso de código
+   - Desacoplar Controllers da lógica de negócio
 
-3. **DTOs para Input**: Criei DTOs específicos para receber dados de criação/atualização, separando as responsabilidades e evitando exposição desnecessária de propriedades.
+2. **Dependency Injection**: Uso de interfaces (`IHeroiService`) para:
 
-4. **Validações em Múltiplas Camadas**:
+   - Facilitar mocks em testes
+   - Permitir troca de implementações
+   - Seguir princípios SOLID
 
-   - Data Annotations nos Models
-   - Validações de negócio nos Controllers
+3. **Entity Framework InMemory Database**: Banco em memória para facilitar execução e testes. Em produção, seria facilmente substituído por SQL Server, MySQL ou PostgreSQL.
+
+4. **Relacionamento Many-to-Many**: Implementei explicitamente a tabela intermediária `HeroisSuperpoderes` para ter controle total sobre o relacionamento entre heróis e superpoderes.
+
+5. **DTOs para Input/Output**:
+
+   - `HeroiDto`: Para receber dados (input)
+   - `HeroiResponseDto`: Para retornar dados (output)
+   - Separação clara de responsabilidades
+
+6. **Validações em Múltiplas Camadas**:
+
+   - **Data Annotations nos DTOs**: Validações básicas de formato (`[Required]`, `[MaxLength]`, `[Range]`)
+   - **Service Layer**: Regras de negócio complexas
+     - Nome de herói único
+     - Data de nascimento válida (não futuro, não antes de 1900, idade < 150 anos)
+     - Dados físicos válidos (altura e peso > 0)
+     - Superpoderes existem no banco
    - Mensagens de erro descritivas e adequadas
 
-5. **HTTP Status Codes Corretos**:
+7. **ServiceResult Pattern**: Objeto padronizado para retorno dos serviços:
+
+   ```csharp
+   ServiceResult<Heroi> result = await _heroiService.CreateAsync(dto);
+   if (!result.Success)
+       return BadRequest(new { message = result.ErrorMessage });
+   ```
+
+8. **HTTP Status Codes Corretos**:
 
    - 200 OK para sucesso
    - 201 Created ao criar recursos
@@ -51,7 +111,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico para vaga de Des
    - 404 Not Found para recursos inexistentes
    - 400 Bad Request para dados inválidos
 
-6. **CORS Configurado**: Permite requisições do frontend Angular rodando em `localhost:4200`.
+9. **CORS Configurado**: Permite requisições do frontend Angular rodando em `localhost:4200`.
 
 ### Frontend (Angular)
 
@@ -78,7 +138,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico para vaga de Des
 
 7. **Feedback Visual**: Implementei estados de loading, mensagens de erro e confirmações para melhorar a UX.
 
-8. **Tema Customizado**: Criei um sistema de design com variáveis CSS, gradientes e paleta de cores consistente.
+8. **Tema Customizado**: Criei um sistema de design com variáveis CSS, gradientes e paleta de cores consistente inspirada em quadrinhos.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -104,8 +164,13 @@ Este projeto foi desenvolvido como parte de um desafio técnico para vaga de Des
 project/
 ├── HeroesAPI/                          # Backend .NET Core
 │   ├── Controllers/                    # Endpoints da API
-│   │   ├── HeroisController.cs        # CRUD de heróis
+│   │   ├── HeroisController.cs        # CRUD de heróis (orquestração)
 │   │   └── SuperpoderesController.cs  # Listagem de superpoderes
+│   ├── Services/                       # Camada de lógica de negócio
+│   │   ├── Interfaces/
+│   │   │   └── IHeroiService.cs       # Contrato do serviço
+│   │   ├── HeroiService.cs            # Implementação das regras de negócio
+│   │   └── ServiceResult.cs           # Objeto de retorno padronizado
 │   ├── DTOs/                          # Data Transfer Objects
 │   │   ├── HeroiDto.cs               # DTO para input
 │   │   └── HeroiResponseDto.cs       # DTO para output
@@ -321,9 +386,10 @@ Cria um novo herói.
 - Todos os campos são obrigatórios
 - `nome` e `nomeHeroi`: máximo 120 caracteres
 - `nomeHeroi` deve ser único
-- `superpoderesIds`: deve conter pelo menos 1 superpoder
-- `altura`: entre 0.01 e 10.0
-- `peso`: entre 0.1 e 1000.0
+- `superpoderesIds`: deve conter pelo menos 1 superpoder e todos devem existir no banco
+- `dataNascimento`: não pode ser no futuro, não pode ser antes de 1900, idade não pode ser superior a 150 anos
+- `altura`: entre 0.01 e 10.0 metros, deve ser maior que zero
+- `peso`: entre 0.1 e 1000.0 kg, deve ser maior que zero
 
 **Resposta de Sucesso (201):**
 Retorna o herói criado com o ID gerado.
@@ -333,6 +399,18 @@ Retorna o herói criado com o ID gerado.
 ```json
 {
   "message": "Já existe um herói chamado 'Batman'"
+}
+```
+
+```json
+{
+  "message": "O peso deve ser maior que zero"
+}
+```
+
+```json
+{
+  "message": "A data de nascimento não pode ser no futuro"
 }
 ```
 
@@ -437,38 +515,52 @@ Retorna a lista de todos os superpoderes disponíveis.
 
 - Informações completas do herói
 - Grid de dados pessoais
-- Lista visual de superpoderes
+- Lista visual de superpoderes com ícones dinâmicos
 - Cálculo automático de idade
 - Botões para editar ou excluir
 
 ### Formulário de Cadastro/Edição
 
 - Validações em tempo real
-- Seleção múltipla de superpoderes
-- Date picker para data de nascimento
+- Seleção múltipla de superpoderes com checkboxes
+- Date picker para data de nascimento (formato brasileiro DD/MM/AAAA)
 - Campos numéricos com máscaras
-- Mensagens de erro claras
+- Mensagens de erro claras e descritivas
 - Feedback visual durante o envio
 
 ## ✅ Validações Implementadas
 
-### Backend
+### Backend - Data Annotations (DTOs)
 
-- ✅ Campos obrigatórios
-- ✅ Tamanho máximo de strings
-- ✅ Ranges numéricos (altura e peso)
-- ✅ Unicidade do nome de herói
-- ✅ Validação de IDs na edição/exclusão
-- ✅ Verificação de superpoderes existentes
+- ✅ Campos obrigatórios (`[Required]`)
+- ✅ Tamanho máximo de strings (`[MaxLength]`)
+- ✅ Ranges numéricos básicos (`[Range]`)
+
+### Backend - Service Layer (Regras de Negócio)
+
+- ✅ **Unicidade do nome de herói**: Verifica se já existe outro herói com o mesmo nome
+- ✅ **Validação de data de nascimento**:
+  - Não pode ser no futuro
+  - Não pode ser antes de 01/01/1900
+  - Idade não pode ser superior a 150 anos
+- ✅ **Validação de dados físicos**:
+  - Altura deve ser maior que zero
+  - Altura deve estar entre 0.01m e 10m
+  - Peso deve ser maior que zero
+  - Peso deve estar entre 0.1kg e 1000kg
+- ✅ **Validação de superpoderes**:
+  - Deve ter pelo menos um superpoder
+  - Todos os superpoderes informados devem existir no banco
+- ✅ **Validação de IDs**: Verifica se o herói existe antes de editar/excluir
 
 ### Frontend
 
-- ✅ Validações de formulário reativo
-- ✅ Mensagens de erro descritivas
+- ✅ Validações de formulário reativo (Angular Reactive Forms)
+- ✅ Mensagens de erro descritivas em português
 - ✅ Desabilitação de botões durante submit
-- ✅ Confirmação antes de excluir
+- ✅ Confirmação visual antes de excluir
 - ✅ Feedback visual de loading
-- ✅ Tratamento de erros da API
+- ✅ Tratamento de erros da API com mensagens amigáveis
 
 ## 🧪 Testes
 
@@ -477,6 +569,19 @@ Retorna a lista de todos os superpoderes disponíveis.
 1. Acesse `http://localhost:5150`
 2. Explore todos os endpoints disponíveis
 3. Teste cada operação CRUD diretamente pela interface
+
+**Testes Recomendados:**
+
+- ✅ Criar herói com dados válidos
+- ✅ Tentar criar herói com nome duplicado (deve falhar)
+- ✅ Tentar criar herói com peso = 0 (deve falhar)
+- ✅ Tentar criar herói com data no futuro (deve falhar)
+- ✅ Tentar criar herói sem superpoderes (deve falhar)
+- ✅ Listar todos os heróis
+- ✅ Buscar herói por ID válido
+- ✅ Buscar herói por ID inválido (deve retornar 404)
+- ✅ Atualizar herói existente
+- ✅ Excluir herói existente
 
 ### Testando o Frontend
 
@@ -487,12 +592,13 @@ Retorna a lista de todos os superpoderes disponíveis.
 
 ## 🔐 Segurança e Boas Práticas
 
-- ✅ CORS configurado corretamente
-- ✅ Validações em múltiplas camadas
-- ✅ DTOs para evitar over-posting
-- ✅ Tratamento adequado de exceções
-- ✅ Mensagens de erro sem exposição de detalhes internos
-- ✅ Código limpo e organizado
-- ✅ Separação de responsabilidades
-
-**Qualquer dúvida sobre decisões técnicas ou implementação, estou à disposição para explicar!** 🚀
+- ✅ **CORS configurado** corretamente para permitir apenas origem específica
+- ✅ **Validações em múltiplas camadas** (DTO + Service)
+- ✅ **DTOs** para evitar over-posting e exposição desnecessária de dados
+- ✅ **Service Layer** para centralizar regras de negócio
+- ✅ **Dependency Injection** com interfaces para facilitar testes e manutenção
+- ✅ **Tratamento adequado de exceções** com mensagens descritivas
+- ✅ **Mensagens de erro** sem exposição de detalhes internos do sistema
+- ✅ **Código limpo e organizado** seguindo princípios SOLID
+- ✅ **Separação de responsabilidades** (Controller → Service → Data Access)
+- ✅ **HTTP Status Codes semânticos** para comunicação clara da API
