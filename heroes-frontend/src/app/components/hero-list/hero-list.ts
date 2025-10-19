@@ -73,11 +73,11 @@ export class HeroList implements OnInit {
 
   // navega para a tela de detalhes do herói com o ID
   viewHero(id: number): void {
-    this.router.navigate(['/heroes', id]);
+    this.router.navigate(['/herois', id]);
   }
 
   editHero(id: number): void {
-    this.router.navigate(['/heroes/edit', id]);
+    this.router.navigate(['/herois/editar', id]);
   }
 
   deleteHero(id: number, nomeHeroi: string): void {
@@ -108,7 +108,7 @@ export class HeroList implements OnInit {
   }
 
   createNew(): void {
-    this.router.navigate(['/heroes/new']);
+    this.router.navigate(['/herois/novo']);
   }
 
   calcularIdade(dataNascimento: Date): number {

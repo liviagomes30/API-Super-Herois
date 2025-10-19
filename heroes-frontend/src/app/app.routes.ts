@@ -1,22 +1,22 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/heroes', pathMatch: 'full' },
+  { path: '', redirectTo: '/herois', pathMatch: 'full' },
   {
-    path: 'heroes',
+    path: 'herois',
     loadComponent: () => import('./components/hero-list/hero-list').then((m) => m.HeroList),
   },
   {
-    path: 'heroes/new',
+    path: 'herois/novo',
     loadComponent: () => import('./components/hero-form/hero-form').then((m) => m.HeroForm),
   },
   {
-    path: 'heroes/edit/:id',
+    path: 'herois/editar/:id',
     loadComponent: () => import('./components/hero-form/hero-form').then((m) => m.HeroForm),
   },
   {
-    path: 'heroes/:id',
+    path: 'herois/:id',
     loadComponent: () => import('./components/hero-detail/hero-detail').then((m) => m.HeroDetail),
   },
-  { path: '**', redirectTo: '/heroes' },
+  { path: '**', redirectTo: '/herois' },
 ];

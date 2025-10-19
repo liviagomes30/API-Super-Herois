@@ -124,7 +124,7 @@ export class HeroDetail implements OnInit {
 
   editHero(): void {
     if (this.heroi) {
-      this.router.navigate(['/heroes/edit', this.heroi.id]);
+      this.router.navigate(['/herois/editar', this.heroi.id]);
     }
   }
 
@@ -141,7 +141,7 @@ export class HeroDetail implements OnInit {
             this.notificationService.showSuccess(
               response.message || `${nomeHeroi} foi excluído com sucesso!`
             );
-            this.router.navigate(['/heroes']);
+            this.router.navigate(['/herois']);
           },
           error: (error) => {
             console.error('Erro ao excluir herói:', error);
@@ -160,7 +160,7 @@ export class HeroDetail implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/heroes']);
+    this.router.navigate(['/herois']);
   }
 
   calcularIdade(dataNascimento: Date): number {
