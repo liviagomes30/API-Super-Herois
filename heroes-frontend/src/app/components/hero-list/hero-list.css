@@ -2,227 +2,412 @@
   max-width: 1200px;
 }
 
-/* ===== HEADER COM GRADIENTE ===== */
+/* ===== HEADER - ESTILO EXPLOSÃO DE QUADRINHOS ===== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-lg);
-  color: var(--text-white);
-  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #ff1744 0%, #d50000 100%);
+  border-radius: 20px;
+  color: white;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+  border: 4px solid #b71c1c;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de pattern no header */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(255, 255, 255, 0.05) 20px,
+    rgba(255, 255, 255, 0.05) 40px
+  );
+  pointer-events: none;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .header-icon {
-  font-size: 36px;
-  width: 36px;
-  height: 36px;
+  font-size: 48px !important;
+  width: 48px !important;
+  height: 48px !important;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .header h1 {
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 500;
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
 }
 
-/* Botão Novo Herói */
+/* Botão Novo Herói - Estilo Comic */
 .btn-new-hero {
-  background: var(--bg-white) !important;
-  color: var(--primary-color) !important;
-  font-weight: 600 !important;
-  padding: 0 var(--spacing-lg) !important;
-  height: 48px !important;
-  border-radius: var(--radius-xl) !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
-  transition: all 0.3s ease !important;
+  background: #ffd600 !important;
+  color: #1a237e !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  padding: 0 30px !important;
+  height: 56px !important;
+  border-radius: 16px !important;
+  border: 4px solid #f57f17 !important;
+  box-shadow: 0 6px 0 #f57f17 !important;
+  transition: all 0.2s ease !important;
+  position: relative;
+  z-index: 1;
 }
 
 .btn-new-hero:hover {
-  background: #f5f5f5 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #f57f17 !important;
 }
 
 .btn-new-hero mat-icon {
-  color: var(--primary-color) !important;
-  margin-right: var(--spacing-sm);
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  color: #1a237e !important;
+  margin-right: 8px;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-new-hero:hover mat-icon {
+  animation: none;
 }
 
 /* ===== GRID DE HERÓIS ===== */
 .heroes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 30px;
+  animation: fadeIn 0.5s ease-out;
 }
 
-/* ===== CARDS DE HERÓIS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== CARDS DE HERÓIS - ESTILO COMIC BOOK ===== */
 .hero-card {
   transition: all 0.3s ease;
   overflow: hidden;
-  border-radius: var(--radius-lg) !important;
+  border-radius: 20px !important;
+  border: 4px solid rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3) !important;
+  transform: rotate(-1deg);
+  animation: cardEntry 0.5s ease-out backwards;
+}
+
+@keyframes cardEntry {
+  from {
+    opacity: 0;
+    transform: rotate(-5deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-1deg) scale(1);
+  }
+}
+
+.hero-card:nth-child(even) {
+  transform: rotate(1deg);
 }
 
 .hero-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
+  transform: rotate(0deg) translateY(-10px) scale(1.02);
+  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Header do Card com Gradiente */
+/* Header do Card - Gradiente Vibrante */
 .card-header-gradient {
-  background: var(--gradient-accent);
-  color: var(--text-white);
-  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pattern no header do card */
+.card-header-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(30%, -30%);
 }
 
 .card-header-gradient mat-card-header {
   padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .card-header-gradient mat-card-title {
-  color: var(--text-white);
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 4px;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 .card-header-gradient mat-card-subtitle {
-  color: var(--text-white-secondary);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-/* Badge de ID */
+/* Badge de ID - Estilo Comic */
 .hero-id-badge {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  background: rgba(255, 255, 255, 0.2);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  gap: 6px;
+  background: #ffd600;
+  color: #1a237e;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: 3px solid #f57f17;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
 }
 
 .hero-id-badge mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-}
-
-/* ===== GRID DE INFORMAÇÕES ===== */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: var(--spacing-md) 0;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: 12px;
-  background: var(--bg-light);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.info-item mat-icon {
-  color: var(--primary-color);
   font-size: 20px;
   width: 20px;
   height: 20px;
 }
 
-/* ===== SUPERPODERES ===== */
+/* ===== GRID DE INFORMAÇÕES - ESTILO BADGE ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: linear-gradient(135deg, #fff9c4 0%, #ffecb3 100%);
+  border-radius: 12px;
+  color: #1a237e;
+  font-weight: 700;
+  border: 3px solid #ffc107;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.info-item mat-icon {
+  color: #ff6f00;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== SUPERPODERES - ESTILO EXPLOSÃO ===== */
 .superpowers {
-  margin-top: var(--spacing-md);
+  margin-top: 20px;
 }
 
 .superpowers-header {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  margin-bottom: 12px;
-  color: var(--text-primary);
+  gap: 10px;
+  margin-bottom: 16px;
+  color: #1a237e;
 }
 
 .superpowers-header mat-icon {
-  color: #ff9800;
+  color: #ff6f00;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  animation: flash 2s infinite;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
 }
 
 .superpowers-header strong {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Chips de Superpoderes */
+/* Chips de Superpoderes - Estilo Comic */
 .powers-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .power-chip-custom {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: var(--gradient-accent);
-  color: var(--text-white);
-  font-weight: 500;
-  padding: 10px var(--spacing-md);
+  gap: 8px;
+  background: linear-gradient(135deg, #ff1744 0%, #d50000 100%);
+  color: white;
+  font-weight: 800;
+  padding: 10px 16px;
   border-radius: 20px;
-  font-size: 0.9rem;
-  transition: transform 0.2s ease;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 3px solid #b71c1c;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
   cursor: default;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.power-chip-custom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.power-chip-custom:hover::before {
+  left: 100%;
 }
 
 .power-chip-custom:hover {
-  transform: scale(1.05);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .power-chip-custom mat-icon {
-  color: var(--text-white);
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+  color: white;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .power-chip-custom span {
-  color: var(--text-white);
+  color: white;
+  font-weight: 800;
+}
+
+/* Variações de cor para os chips */
+.power-chip-custom:nth-child(3n + 1) {
+  background: linear-gradient(135deg, #2979ff 0%, #0091ea 100%);
+  border-color: #0d47a1;
+}
+
+.power-chip-custom:nth-child(3n + 2) {
+  background: linear-gradient(135deg, #00e676 0%, #00c853 100%);
+  border-color: #00695c;
+}
+
+.power-chip-custom:nth-child(3n + 3) {
+  background: linear-gradient(135deg, #ffd600 0%, #ffc400 100%);
+  border-color: #f57f17;
+  color: #1a237e;
+}
+
+.power-chip-custom:nth-child(3n + 3) mat-icon,
+.power-chip-custom:nth-child(3n + 3) span {
+  color: #1a237e;
 }
 
 /* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 768px) {
   .heroes-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 24px;
+  }
+
+  .header {
+    padding: 24px;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
   }
 
   .info-grid {
     grid-template-columns: 1fr;
-  }
-
-  .header {
-    padding: var(--spacing-md);
-  }
-
-  .header h1 {
-    font-size: 1.4rem;
   }
 }
 
@@ -231,19 +416,37 @@
   .header {
     flex-direction: column;
     align-items: stretch;
-    gap: 15px;
+    gap: 20px;
+    padding: 20px;
   }
 
   .header-content {
     justify-content: center;
   }
 
+  .header h1 {
+    font-size: 1.4rem;
+  }
+
+  .btn-new-hero {
+    width: 100%;
+  }
+
   .card-header-gradient {
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
   }
 
   .hero-id-badge {
     align-self: flex-start;
+  }
+
+  .powers-chips {
+    gap: 8px;
+  }
+
+  .power-chip-custom {
+    font-size: 0.8rem;
+    padding: 10px 14px;
   }
 }

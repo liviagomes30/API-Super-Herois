@@ -6,45 +6,120 @@
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-bottom: 20px;
+  border-bottom: 4px dashed rgba(0, 0, 0, 0.2);
 }
 
 .header h1 {
   margin: 0;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a237e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* ===== HERO DETAIL CARD ===== */
+
+.header button:hover {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ===== HERO DETAIL CARD - ESTILO EXPLOSÃO ===== */
 .hero-detail-card {
+  overflow: hidden;
+  border: 4px solid rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 20px !important;
+  transform: rotate(-0.5deg);
+  animation: cardAppear 0.5s ease-out;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: rotate(-5deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-0.5deg) scale(1);
+  }
+}
+
+/* Header do Card - Super Vibrante */
+.hero-header {
+  background: linear-gradient(135deg, #ff1744 0%, #d50000 100%);
+  color: white;
+  padding: 40px;
+  position: relative;
   overflow: hidden;
 }
 
-/* Header do Card com Gradiente */
-.hero-header {
-  background: var(--gradient-primary);
-  color: var(--text-white);
-  padding: var(--spacing-lg);
+/* Pattern de explosão no header */
+.hero-header::before {
+  content: '💥';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  font-size: 200px;
+  opacity: 0.1;
+  transform: rotate(-25deg);
+}
+
+.hero-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 30px,
+    rgba(255, 255, 255, 0.05) 30px,
+    rgba(255, 255, 255, 0.05) 60px
+  );
+  pointer-events: none;
 }
 
 .hero-header mat-card-title {
-  font-size: 2rem;
-  font-weight: 500;
-  margin-bottom: 4px;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+  animation: heroTitle 0.5s ease-out;
+}
+
+@keyframes heroTitle {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .hero-header mat-card-subtitle {
-  color: var(--text-white-secondary);
-  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
 }
 
 /* Content */
 mat-card-content {
-  padding: var(--spacing-lg);
+  padding: 40px;
+  background: linear-gradient(180deg, #fff9c4 0%, white 100%);
 }
 
 /* ===== SEÇÕES DE INFORMAÇÃO ===== */
@@ -52,76 +127,199 @@ mat-card-content {
 .powers-section h2 {
   display: flex;
   align-items: center;
-  gap: 12px;
-  color: var(--text-primary);
-  font-size: 1.4rem;
-  font-weight: 500;
-  margin: 0 0 20px 0;
+  gap: 16px;
+  color: #1a237e;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 24px 0;
+  padding: 16px;
+  background: linear-gradient(135deg, #ffd600 0%, #ffc400 100%);
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 3px solid #f57f17;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.info-section h2 mat-icon,
+.powers-section h2 mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #1a237e;
 }
 
 .powers-section {
-  margin-top: 32px;
+  margin-top: 40px;
 }
 
-/* Grid de Informações */
+.powers-section h2 {
+  background: linear-gradient(135deg, #2979ff 0%, #0091ea 100%);
+  border-color: #0d47a1;
+  color: white;
+}
+
+.powers-section h2 mat-icon {
+  color: white;
+  animation: powerPulse 2s infinite;
+}
+
+@keyframes powerPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Grid de Informações - Estilo Card */
 .info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
+  gap: 16px;
 }
 
 .info-item {
-  padding: 12px;
-  background-color: var(--bg-light);
-  border-radius: var(--radius-sm);
-  border-left: 4px solid var(--primary-dark);
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 3px solid #2979ff;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
-/* ===== SUPERPODERES ===== */
+.info-item:hover {
+  transform: translateY(-3px) rotate(-1deg);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.info-item .label {
+  display: block;
+  font-weight: 800;
+  color: #1a237e;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-item .value {
+  font-size: 1.2rem;
+  color: #424242;
+  font-weight: 700;
+}
+
+/* ===== SUPERPODERES - CARDS VIBRANTES ===== */
 .powers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 }
 
 .power-card {
-  background: var(--gradient-accent);
-  color: var(--text-white);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   transition: all 0.3s ease;
   cursor: pointer;
-  border-radius: var(--radius-lg) !important;
+  border-radius: 16px !important;
   overflow: hidden;
+  border: 4px solid #512da8 !important;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3) !important;
+  position: relative;
+  transform: rotate(-1deg);
+}
+
+.power-card:nth-child(even) {
+  transform: rotate(1deg);
+}
+
+.power-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(30%, -30%);
 }
 
 .power-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  transform: rotate(0deg) translateY(-8px) scale(1.03);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Variações de cor para os power cards */
+.power-card:nth-child(3n + 1) {
+  background: linear-gradient(135deg, #ff1744 0%, #d50000 100%);
+  border-color: #b71c1c;
+}
+
+.power-card:nth-child(3n + 2) {
+  background: linear-gradient(135deg, #2979ff 0%, #0091ea 100%);
+  border-color: #0d47a1;
+}
+
+.power-card:nth-child(3n + 3) {
+  background: linear-gradient(135deg, #00e676 0%, #00c853 100%);
+  border-color: #00695c;
 }
 
 .power-card mat-card-content {
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-md);
-  padding: 20px !important;
+  gap: 20px;
+  padding: 24px !important;
+  position: relative;
+  z-index: 1;
 }
 
 /* Ícone do Superpoder */
 .power-icon {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-full);
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .power-icon mat-icon {
-  color: var(--text-white);
-  font-size: 28px;
-  width: 28px;
-  height: 28px;
+  color: #764ba2;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  animation: iconSpin 3s linear infinite;
+}
+
+@keyframes iconSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.power-card:hover .power-icon mat-icon {
+  animation: iconBounce 0.5s ease;
+}
+
+@keyframes iconBounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 /* Informações do Superpoder */
@@ -130,27 +328,103 @@ mat-card-content {
 }
 
 .power-info h3 {
-  margin: 0 0 var(--spacing-sm) 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-white);
+  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #764ba2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 3px 3px 0px #fff;
 }
 
 .power-info p {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #764ba2;
+  font-weight: 600;
+  text-shadow: 2px 2px 0px #fff;
+}
+
+/* ===== DIVIDER - ESTILO COMIC ===== */
+mat-divider {
+  margin: 32px 0 !important;
+  border-top-width: 3px !important;
+  border-style: dashed !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ===== AÇÕES DO CARD ===== */
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px !important;
+  border-top: 4px dashed rgba(0, 0, 0, 0.1);
+  background: #fff9c4;
+}
+
+mat-card-actions button {
+  flex: 1;
+  max-width: 250px;
+  height: 56px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  border-radius: 16px !important;
+  border: 4px solid !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Botão Editar - Amarelo */
+mat-card-actions button[color='accent'] {
+  background: linear-gradient(135deg, #ffd600 0%, #ffc400 100%) !important;
+  color: #1a237e !important;
+  border-color: #f57f17 !important;
+  box-shadow: 0 6px 0 #f57f17 !important;
+}
+
+mat-card-actions button[color='accent']:hover {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #f57f17 !important;
+}
+
+mat-card-actions button[color='accent'] mat-icon {
+  color: #1a237e !important;
+}
+
+/* Botão Excluir - Vermelho */
+mat-card-actions button[color='warn'] {
+  background: linear-gradient(135deg, #ff1744 0%, #d50000 100%) !important;
+  color: white !important;
+  border-color: #b71c1c !important;
+  box-shadow: 0 6px 0 #b71c1c !important;
+}
+
+mat-card-actions button[color='warn']:hover {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #b71c1c !important;
+}
+
+mat-card-actions button[color='warn'] mat-icon {
+  color: white !important;
+}
+
+mat-card-actions button mat-icon {
+  margin-right: 10px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 /* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 768px) {
   .header h1 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   .hero-header mat-card-title {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 
   .info-grid {
@@ -163,7 +437,11 @@ mat-card-content {
 
   .info-section h2,
   .powers-section h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  mat-card-content {
+    padding: 24px;
   }
 }
 
@@ -171,10 +449,51 @@ mat-card-content {
 @media (max-width: 600px) {
   .header {
     margin-bottom: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 16px;
+  }
+
+  .header h1 {
+    font-size: 1.3rem;
+  }
+
+  .hero-header {
+    padding: 24px;
+  }
+
+  .hero-header mat-card-title {
+    font-size: 1.6rem;
+  }
+
+  mat-card-content {
+    padding: 20px;
   }
 
   .power-card mat-card-content {
-    padding: var(--spacing-md) !important;
+    padding: 20px !important;
+  }
+
+  .power-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .power-icon mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .power-info h3 {
+    font-size: 1.2rem;
+  }
+
+  mat-card-actions {
+    flex-direction: column;
+    padding: 16px !important;
+  }
+
+  mat-card-actions button {
+    width: 100%;
+    max-width: 100%;
   }
 }
